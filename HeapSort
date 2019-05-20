@@ -1,0 +1,79 @@
+// 이진트리 : 자식이 최대 2명 인것.
+// full binary tree : 모든 레벨에 노드들이 꽉 차있음 leaf 제외
+// 완전이진트리(complete binary tree) : 마지막 레벨을 제외하면 완전히 꽉 차있다.
+// 마지막 레벨도 왼쪽부터 채워야 한다. 코드 짤 때는 그냥 순서대로 배열에 삽입하는것, 왼쪽부터 작은값을 넣는다.
+
+// heap sort : O(NlogN), merge sort는 마지막에 추가 배열이 필요한데 heap sort는 불필요해서 더 유리
+// heap : complete binary tree 이면서 heap property 만족해야.
+
+// max heap, min heap (heap property)으로 나뉜다. 완전 이진 트리여도 min, max 특성 만족못하면 heap 아니다.
+// (섞여 있으면 안됨) 자식하고 비교한다.
+
+// max heap : 부모는 자식보다 크거나 같다.
+// min heap : 부모는 자식보다 작거나 같다.
+
+// 일단 완전 이진트리를 heap으로 만들자!! = heapify algorithm
+// heapify algorithm은 특정한 노드의 두 자식 중에서 더 큰 자식과 자신의 위치를 바꾸는 알고리즘
+// 마지막 레벨 젤오른쪽 노드가 포함된 부모 , 자식 셋트를 처음으로 heapify 적용한다.
+// 그래서 힙을 만들고 다른걸 힙을 만들어서 계속 힙을 결합해서 가는 것.
+
+// heap을 만들고 루트 값을 배열의 마지막 값과 교환. 그리고 고정.
+// 다시 heapify적용, 이걸 반복 하면 오름차순으로 정리가됨.
+
+// root = a[1], a[i] 의 부모 : a[i/2], a[i]의 왼쪽자식 : a[2i], a[i]의 오른쪽 자식 : a[2i+1]
+
+#include <iostream>
+
+using namespace std;
+
+int num = 9;
+int heap[9] = {7,6,5,8,3,5,9,1,6};
+
+int main()
+{
+    for(int i=1;i<num;i++)
+    {
+        int c = i;
+        do {
+            int root = (c-1)/2;
+            if(heap[root] < heap[c])
+            {
+                int temp = heap[root];
+                heap[root] = heap[c];
+                heap[c] = temp;
+            }
+            c = root;
+        }while(c!=0);
+    }
+
+    for(int i=num-1;i>=0;i--)
+    {
+        int temp = heap[0];
+        heap[0] = heap[i];
+        heap[i] = temp;
+        int root = 0;
+        int c = 1;
+        do {
+            c = 2 * root + 1;
+            if (c < i - 1 && heap[c] < heap[c + 1])
+                c++;
+            if (c < i && heap[root] < heap[c]) {
+                temp = heap[root];
+                heap[root] = heap[c];
+                heap[c] = temp;
+            }
+            root = c;
+        }while(c <i);
+
+    }
+
+    for(int i = 0;i<num;i++)
+        printf("%d",heap[i]);
+    return 0;
+}
+
+
+
+
+
+
