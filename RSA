@@ -1,0 +1,60 @@
+
+#include <iostream>
+#include <cmath>
+
+
+using namespace std;
+
+typedef long long int llt;
+int calculate(int p, int q)
+{
+    return (p-1) * (q-1);
+}
+
+llt res(int c, int d, int n)
+{
+    if(d == 0) return 1;
+    if(d == 1) return c%n;
+    if(d % 2 == 0) {
+        llt cnt = res(c, d / 2, n)%n;
+        return (cnt * cnt) % n;
+    }
+    if(d % 2 == 1)
+    {
+        llt cnt = res(c,d-1,n)%n;
+        return (c*cnt)%n;
+    }
+
+}
+int main()
+{
+    int p,q;
+    p = 547;
+    q = 593;
+
+    int n = p*q;
+
+    calculate(p,q);
+
+    int e = 17;
+    int d = 1;
+    int c = 132637;
+    while(1)
+    {
+        int res = ((e*d)%calculate(p,q));
+        if(res == 1)
+            break;
+
+        d++;
+    }
+
+    printf("%d \n",d);
+    printf("메세지 데이터(Plain text) : %d \n", p);
+    printf("암호화된 데이터(Cipher) : %d \n", c);
+
+    llt res2 = res(c,d,n);
+
+    printf("복호화된 데이터 : %lld", res2);
+    return 0;
+
+}
