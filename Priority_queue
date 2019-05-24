@@ -1,0 +1,25 @@
+#include <iostream>
+#include <queue>
+
+using namespace std;
+
+priority_queue<int,vector<int>, less<int> > pq;  // <자료형,구현체,비교 연산자>  , 구현체는 기본적으로 vector<자료형> 으로쓴다.
+// 자료형만 써도 돌아간다.
+
+
+int main()
+{
+    pq.push(3);
+    pq.push(1);
+    pq.push(4);
+    pq.push(1);
+    pq.push(5);
+    pq.push(9);
+
+    while(!pq.empty())
+    {
+        printf("%d", pq.top());
+        pq.pop();
+    }
+    return 0;
+}
